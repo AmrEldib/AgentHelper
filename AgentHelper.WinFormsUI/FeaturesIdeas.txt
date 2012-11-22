@@ -1,0 +1,5 @@
+﻿DONE - Show notification icon to display status (Green for logged in, red for logged out).
+- Log out if user is inactive for a certain time (say, 10 mins).
+- Let user specify duration.
+- Log back in if user is active, and was logged out by helper application.
+- Show a notification balloon if user is active but not logged in.

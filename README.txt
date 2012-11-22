@@ -1,0 +1,1 @@
+AgentHelper is a utility that helps show status of Cisco Agent in the System Tray
