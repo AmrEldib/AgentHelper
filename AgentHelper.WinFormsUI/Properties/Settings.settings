@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CiscoAgentHelper.WinFormsUI.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AgentHelper.WinFormsUI.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="ShowMinimizeNotification" Type="System.Boolean" Scope="User">
@@ -7,6 +7,15 @@
     </Setting>
     <Setting Name="AgentLogFilePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Program Files (x86)\Cisco\Desktop\log\Agent0001.log</Value>
+    </Setting>
+    <Setting Name="IdleMinsBeforeLoggingOut" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="CiscoPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">123456</Value>
+    </Setting>
+    <Setting Name="LogInAfterIdle" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

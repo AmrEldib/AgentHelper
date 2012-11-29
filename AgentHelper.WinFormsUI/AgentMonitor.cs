@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Drawing;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using AgentHelper.WinFormsUI.Properties;
@@ -11,15 +12,33 @@ namespace AgentHelper.WinFormsUI
     {
         private Timer StatusTimer { get; set; }
 
+        private Timer IdleTimer { get; set; }
+
         private NotifyIcon TrayIcon { get; set; }
         private ContextMenu TrayMenu { get; set; }
 
-        public Icon PhoneIcon
+        public bool LoggedOutBecauseIdle { get; set; }
+
+        private bool _IsLoggedIn;
+
+        public bool IsLoggedIn
         {
+            get { return _IsLoggedIn; }
             set
             {
-                this.TrayIcon.Icon = value;
-                this.Icon = value;
+                _IsLoggedIn = value;
+                if (value)
+                {
+                    this.lblCurrentStatus.Text = "Agent is Logged In";
+                    this.TrayIcon.Icon = Resources.GreenPhone;
+                    this.Icon = Resources.GreenPhone;
+                }
+                else
+                {
+                    this.lblCurrentStatus.Text = "Agent is Logged Out";
+                    this.TrayIcon.Icon = Resources.RedPhone;
+                    this.Icon = Resources.RedPhone;
+                }
             }
         }
 
@@ -29,6 +48,12 @@ namespace AgentHelper.WinFormsUI
 
             // Check that log file exists
             this.CheckLogFilePath();
+
+            // Settings button
+            this.btnSettings.Click += btnSettings_Click;
+
+            // Set up Idle monitoring
+            this.SetupIdleMonitoring();
 
             // Set up monitoring of agent status every 10 seconds
             this.StatusTimer = new Timer();
@@ -58,6 +83,78 @@ namespace AgentHelper.WinFormsUI
             this.StatusTimer.Start();
         }
 
+        private void SetupIdleMonitoring()
+        {
+            // Set up monitoring of idle time
+            this.IdleTimer = new Timer();
+            if (Settings.Default.IdleMinsBeforeLoggingOut != 0)
+            {
+                this.IdleTimer.Interval = (Settings.Default.IdleMinsBeforeLoggingOut * 60 * 1000) / 2; // IdleMintues * 60 seconds/min * 1000 millisec/sec
+            }
+            else
+            {
+                this.IdleTimer.Interval = 10000000;
+            }
+            this.IdleTimer.Tick += IdleTimer_Tick;
+
+            // Start monitoring idle time
+            if (Settings.Default.IdleMinsBeforeLoggingOut != 0)
+            {
+                this.IdleTimer.Start();
+            }
+            this.LoggedOutBecauseIdle = false;
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            this.ShowSettingsForm();
+
+            // Set up Idle monitoring
+            this.SetupIdleMonitoring();
+        }
+
+        private void ShowSettingsForm()
+        {
+            SettingsForm settingsForm = new SettingsForm();
+            settingsForm.Show(this);
+        }
+
+        private void IdleTimer_Tick(object sender, EventArgs e)
+        {
+            if (Settings.Default.IdleMinsBeforeLoggingOut != 0)
+            {
+                if (GetLastInputTime() > Settings.Default.IdleMinsBeforeLoggingOut & this.IsLoggedIn)
+                {
+                    this.LogOut();
+                    this.LoggedOutBecauseIdle = true;
+                }
+                else
+                {
+                    if (this.LoggedOutBecauseIdle & !this.IsLoggedIn & Settings.Default.LogInAfterIdle)
+                    {
+                        this.LogIn();
+                        this.LoggedOutBecauseIdle = false;
+                    }
+                }
+            }
+        }
+
+        private void LogIn()
+        {
+            Process.Start("LogInAgent.ahk");
+
+            // Change status
+            this.IsLoggedIn = true;
+        }
+
+        private void LogOut()
+        {
+            Process.Start("LogOutAgent.ahk");
+
+            // Change status
+            this.IsLoggedIn = false;
+        }
+
         private void AgentMonitor_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.TrayIcon.Visible = false;
@@ -77,10 +174,43 @@ namespace AgentHelper.WinFormsUI
                         Settings.Default.AgentLogFilePath = Resources.AgentLogFilePath86;
                         Settings.Default.Save();
                     }
+                    else
+                    {
+                        this.ChooseLogFilePath();
+                    }
                 }
                 else
                 {
-                    // TODO: Other cases where "Agent0001.log" is not the log file, but "Agent0002.log" or other number.
+                    this.ChooseLogFilePath();
+                }
+            }
+        }
+
+        private void ChooseLogFilePath()
+        {
+            MessageBox.Show("Can't find Cisco's log file. Please choose the path to the file.", "Log File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            bool fileReplaced = false;
+            while (!fileReplaced)
+            {
+                OpenFileDialog ofd = new OpenFileDialog();
+                ofd.Filter = "Log File|*.log";
+                ofd.SupportMultiDottedExtensions = true;
+                ofd.Title = "Select Cisco Log File";
+                DialogResult result = ofd.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    Settings.Default.AgentLogFilePath = ofd.FileName;
+                    Settings.Default.Save();
+                    fileReplaced = true;
+                }
+                else
+                {
+                    DialogResult errorResult = MessageBox.Show("Can't run Agent Helper without the location of the Cisco log file. Exit now?", "File Path Required", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (errorResult == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        fileReplaced = true;
+                        Environment.Exit(0);
+                    }
                 }
             }
         }
@@ -167,19 +297,7 @@ namespace AgentHelper.WinFormsUI
             string logContent = this.GetContentOfAgentLog(Settings.Default.AgentLogFilePath);
 
             // Detect status based on log content
-            bool loggedIn = this.IsAgentLoggedIn(logContent);
-
-            // Update visuals
-            if (loggedIn)
-            {
-                this.lblCurrentStatus.Text = "Logged In";
-                this.PhoneIcon = Resources.GreenPhone;
-            }
-            else
-            {
-                this.lblCurrentStatus.Text = "Logged Out";
-                this.PhoneIcon = Resources.RedPhone;
-            }
+            this.IsLoggedIn = this.IsAgentLoggedIn(logContent);
         }
 
         private bool IsAgentLoggedIn(string logContent)
@@ -188,6 +306,39 @@ namespace AgentHelper.WinFormsUI
             int loggedOutIndex = logContent.LastIndexOf(Resources.LoggedOutMessage);
 
             return (loggedInIndex > loggedOutIndex);
+        }
+
+        [DllImport("user32.dll")]
+        static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+
+        static int GetLastInputTime()
+        {
+            int idleTime = 0;
+            LASTINPUTINFO lastInputInfo = new LASTINPUTINFO();
+            lastInputInfo.cbSize = Marshal.SizeOf(lastInputInfo);
+            lastInputInfo.dwTime = 0;
+
+            int envTicks = Environment.TickCount;
+
+            if (GetLastInputInfo(ref lastInputInfo))
+            {
+                int lastInputTick = Convert.ToInt32(lastInputInfo.dwTime);
+
+                idleTime = envTicks - lastInputTick;
+            }
+
+            return ((idleTime > 0) ? (idleTime / 1000) : idleTime);
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct LASTINPUTINFO
+        {
+            public static readonly int SizeOf = Marshal.SizeOf(typeof(LASTINPUTINFO));
+
+            [MarshalAs(UnmanagedType.U4)]
+            public int cbSize;
+            [MarshalAs(UnmanagedType.U4)]
+            public UInt32 dwTime;
         }
     }
 }

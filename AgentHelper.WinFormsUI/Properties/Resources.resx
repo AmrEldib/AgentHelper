@@ -123,6 +123,21 @@
   <data name="AgentLogFilePath86" xml:space="preserve">
     <value>C:\Program Files\Cisco\Desktop\log\Agent0001.log</value>
   </data>
+  <data name="AhkLoginScript" xml:space="preserve">
+    <value>IfWinExist Logout - Cisco Agent Desktop
+{
+    WinActivate
+	Send ^l
+	WinWaitActive Agent Login
+	Send [PASSCODE]{Enter}
+}</value>
+  </data>
+  <data name="AhkLoginScriptName" xml:space="preserve">
+    <value>LogInAgent.ahk</value>
+  </data>
+  <data name="AhkLogOutScriptName" xml:space="preserve">
+    <value>LogOutAgent.ahk</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="GreenPhone" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GreenPhone.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -29,22 +29,33 @@
         private void InitializeComponent()
         {
             this.lblCurrentStatus = new System.Windows.Forms.Label();
+            this.btnSettings = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblCurrentStatus
             // 
             this.lblCurrentStatus.AutoSize = true;
-            this.lblCurrentStatus.Location = new System.Drawing.Point(29, 39);
+            this.lblCurrentStatus.Location = new System.Drawing.Point(26, 39);
             this.lblCurrentStatus.Name = "lblCurrentStatus";
             this.lblCurrentStatus.Size = new System.Drawing.Size(133, 13);
             this.lblCurrentStatus.TabIndex = 1;
             this.lblCurrentStatus.Text = "Agent is <CurrentStatus>";
             // 
+            // btnSettings
+            // 
+            this.btnSettings.Location = new System.Drawing.Point(233, 34);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(75, 23);
+            this.btnSettings.TabIndex = 2;
+            this.btnSettings.Text = "Settings";
+            this.btnSettings.UseVisualStyleBackColor = true;
+            // 
             // AgentMonitor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(332, 99);
+            this.ClientSize = new System.Drawing.Size(332, 86);
+            this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.lblCurrentStatus);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -58,6 +69,7 @@
         #endregion
 
         private System.Windows.Forms.Label lblCurrentStatus;
+        private System.Windows.Forms.Button btnSettings;
     }
 }
 

@@ -79,6 +79,39 @@ namespace AgentHelper.WinFormsUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IfWinExist Logout - Cisco Agent Desktop
+        ///{
+        ///    WinActivate
+        ///	Send ^l
+        ///	WinWaitActive Agent Login
+        ///	Send [PASSCODE]{Enter}
+        ///}.
+        /// </summary>
+        internal static string AhkLoginScript {
+            get {
+                return ResourceManager.GetString("AhkLoginScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LogInAgent.ahk.
+        /// </summary>
+        internal static string AhkLoginScriptName {
+            get {
+                return ResourceManager.GetString("AhkLoginScriptName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LogOutAgent.ahk.
+        /// </summary>
+        internal static string AhkLogOutScriptName {
+            get {
+                return ResourceManager.GetString("AhkLogOutScriptName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon GreenPhone {

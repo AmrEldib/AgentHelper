@@ -16,20 +16,8 @@ namespace AgentHelper.WinFormsUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Idle += Application_Idle;
-            Application.ApplicationExit += Application_ApplicationExit;
-
             Application.Run(new AgentMonitor());
         }
 
-        static void Application_ApplicationExit(object sender, EventArgs e)
-        {
-            Application.Idle -= Application_Idle;
-        }
-
-        static void Application_Idle(object sender, EventArgs e)
-        {
-
-        }
     }
 }

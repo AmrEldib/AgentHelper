@@ -46,5 +46,41 @@ namespace AgentHelper.WinFormsUI.Properties {
                 this["AgentLogFilePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int IdleMinsBeforeLoggingOut {
+            get {
+                return ((int)(this["IdleMinsBeforeLoggingOut"]));
+            }
+            set {
+                this["IdleMinsBeforeLoggingOut"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("123456")]
+        public string CiscoPassword {
+            get {
+                return ((string)(this["CiscoPassword"]));
+            }
+            set {
+                this["CiscoPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LogInAfterIdle {
+            get {
+                return ((bool)(this["LogInAfterIdle"]));
+            }
+            set {
+                this["LogInAfterIdle"] = value;
+            }
+        }
     }
 }
