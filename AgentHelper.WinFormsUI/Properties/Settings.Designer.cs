@@ -37,18 +37,6 @@ namespace AgentHelper.WinFormsUI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Program Files (x86)\\Cisco\\Desktop\\log\\Agent0001.log")]
-        public string AgentLogFilePath {
-            get {
-                return ((string)(this["AgentLogFilePath"]));
-            }
-            set {
-                this["AgentLogFilePath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int IdleMinsBeforeLoggingOut {
             get {
@@ -80,6 +68,18 @@ namespace AgentHelper.WinFormsUI.Properties {
             }
             set {
                 this["LogInAfterIdle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("agent")]
+        public string CiscoAgentProcessName {
+            get {
+                return ((string)(this["CiscoAgentProcessName"]));
+            }
+            set {
+                this["CiscoAgentProcessName"] = value;
             }
         }
     }

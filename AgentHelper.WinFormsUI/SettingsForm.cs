@@ -40,15 +40,15 @@ namespace AgentHelper.WinFormsUI
 
         private void btnLogPathBrowse_Click(object sender, EventArgs e)
         {
-            if (File.Exists(this.txtLogPath.Text))
+            if (File.Exists(this.txtCiscoExeFile.Text))
             {
-                ofdLogFilePath.InitialDirectory = Path.GetDirectoryName(this.txtLogPath.Text);
-                ofdLogFilePath.FileName = Path.GetFileName(this.txtLogPath.Text);
+                ofdCiscoExePath.InitialDirectory = Path.GetDirectoryName(this.txtCiscoExeFile.Text);
+                ofdCiscoExePath.FileName = Path.GetFileName(this.txtCiscoExeFile.Text);
             }
-            DialogResult result = ofdLogFilePath.ShowDialog(this);
+            DialogResult result = ofdCiscoExePath.ShowDialog(this);
             if (result == DialogResult.OK)
             {
-                this.txtLogPath.Text = ofdLogFilePath.FileName;
+                this.txtCiscoExeFile.Text = Path.GetFileNameWithoutExtension(ofdCiscoExePath.FileName);
             }
         }
 
@@ -64,8 +64,8 @@ namespace AgentHelper.WinFormsUI
 
         private void LoadSettings()
         {
-            // AgentLogFilePath
-            this.txtLogPath.Text = Settings.Default.AgentLogFilePath;
+            // CiscoAgentProcessName
+            this.txtCiscoExeFile.Text = Settings.Default.CiscoAgentProcessName;
 
             // IdleMinsBeforeLoggingOut
             if (Settings.Default.IdleMinsBeforeLoggingOut == 0)
@@ -91,13 +91,13 @@ namespace AgentHelper.WinFormsUI
         private void SaveSettings()
         {
             // AgendLogFilePath
-            if (!File.Exists(this.txtLogPath.Text))
+            if (!File.Exists(this.txtCiscoExeFile.Text))
             {
-                throw new FileNotFoundException("Log file not found.", this.txtLogPath.Text);
+                throw new FileNotFoundException("Log file not found.", this.txtCiscoExeFile.Text);
             }
             else
             {
-                Settings.Default.AgentLogFilePath = this.txtLogPath.Text;
+                Settings.Default.CiscoAgentProcessName = this.txtCiscoExeFile.Text;
             }
 
             // IdleMinsBeforeLoggingOut
@@ -130,7 +130,7 @@ namespace AgentHelper.WinFormsUI
             string loginScriptContent = Resources.AhkLoginScript.Replace("[PASSCODE]", Settings.Default.CiscoPassword);
 
             // Write script to file
-            using (TextWriter tw = new StreamWriter(Resources.AhkLoginScriptName))
+            using (TextWriter tw = new StreamWriter(Resources.AhkScriptLogin))
             {
                 tw.Write(loginScriptContent);
             }

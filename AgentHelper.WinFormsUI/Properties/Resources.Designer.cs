@@ -96,18 +96,45 @@ namespace AgentHelper.WinFormsUI.Properties {
         /// <summary>
         ///   Looks up a localized string similar to LogInAgent.ahk.
         /// </summary>
-        internal static string AhkLoginScriptName {
+        internal static string AhkScriptLogin {
             get {
-                return ResourceManager.GetString("AhkLoginScriptName", resourceCulture);
+                return ResourceManager.GetString("AhkScriptLogin", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to LogOutAgent.ahk.
         /// </summary>
-        internal static string AhkLogOutScriptName {
+        internal static string AhkScriptLogOut {
             get {
-                return ResourceManager.GetString("AhkLogOutScriptName", resourceCulture);
+                return ResourceManager.GetString("AhkScriptLogOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout - Cisco Agent Desktop.
+        /// </summary>
+        internal static string CiscoWindowTitleLoggedOut {
+            get {
+                return ResourceManager.GetString("CiscoWindowTitleLoggedOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Ready - Cisco Agent Desktop.
+        /// </summary>
+        internal static string CiscoWindowTitleNotReady {
+            get {
+                return ResourceManager.GetString("CiscoWindowTitleNotReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ready - Cisco Agent Desktop.
+        /// </summary>
+        internal static string CiscoWindowTitleReady {
+            get {
+                return ResourceManager.GetString("CiscoWindowTitleReady", resourceCulture);
             }
         }
         
@@ -118,24 +145,6 @@ namespace AgentHelper.WinFormsUI.Properties {
             get {
                 object obj = ResourceManager.GetObject("GreenPhone", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Desktop Monitoring module on the local host has been successfully initialized.
-        /// </summary>
-        internal static string LoggedInMessage {
-            get {
-                return ResourceManager.GetString("LoggedInMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Desktop monitoring disabled for extension.
-        /// </summary>
-        internal static string LoggedOutMessage {
-            get {
-                return ResourceManager.GetString("LoggedOutMessage", resourceCulture);
             }
         }
         

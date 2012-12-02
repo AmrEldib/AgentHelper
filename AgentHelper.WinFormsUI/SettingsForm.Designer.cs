@@ -32,7 +32,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtLogPath = new System.Windows.Forms.TextBox();
+            this.txtCiscoExeFile = new System.Windows.Forms.TextBox();
             this.btnLogPathBrowse = new System.Windows.Forms.Button();
             this.chkLogOutWhenIdle = new System.Windows.Forms.CheckBox();
             this.numLogOutWhenIdle = new System.Windows.Forms.NumericUpDown();
@@ -41,7 +41,7 @@
             this.lblCiscoPassword = new System.Windows.Forms.Label();
             this.txtCiscoPassword = new System.Windows.Forms.TextBox();
             this.lblCiscoPasswordNote = new System.Windows.Forms.Label();
-            this.ofdLogFilePath = new System.Windows.Forms.OpenFileDialog();
+            this.ofdCiscoExePath = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.numLogOutWhenIdle)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,18 +70,18 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(26, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(109, 13);
+            this.label1.Size = new System.Drawing.Size(149, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Path to Cisco Log File";
+            this.label1.Text = "Name of Cisco Application File";
             // 
-            // txtLogPath
+            // txtCiscoExeFile
             // 
-            this.txtLogPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtCiscoExeFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtLogPath.Location = new System.Drawing.Point(29, 47);
-            this.txtLogPath.Name = "txtLogPath";
-            this.txtLogPath.Size = new System.Drawing.Size(431, 20);
-            this.txtLogPath.TabIndex = 3;
+            this.txtCiscoExeFile.Location = new System.Drawing.Point(29, 47);
+            this.txtCiscoExeFile.Name = "txtCiscoExeFile";
+            this.txtCiscoExeFile.Size = new System.Drawing.Size(431, 20);
+            this.txtCiscoExeFile.TabIndex = 3;
             // 
             // btnLogPathBrowse
             // 
@@ -166,12 +166,12 @@
             this.lblCiscoPasswordNote.Text = "Note: this password will be stored as plain text.\r\nYou have to have AutoHotKey in" +
     "stalled for loggin out and in to work.";
             // 
-            // ofdLogFilePath
+            // ofdCiscoExePath
             // 
-            this.ofdLogFilePath.Filter = "Log File|*.log";
-            this.ofdLogFilePath.RestoreDirectory = true;
-            this.ofdLogFilePath.SupportMultiDottedExtensions = true;
-            this.ofdLogFilePath.Title = "Select Cisco Log File";
+            this.ofdCiscoExePath.Filter = "Application|*.exe";
+            this.ofdCiscoExePath.RestoreDirectory = true;
+            this.ofdCiscoExePath.SupportMultiDottedExtensions = true;
+            this.ofdCiscoExePath.Title = "Select Cisco Application File";
             // 
             // SettingsForm
             // 
@@ -186,7 +186,7 @@
             this.Controls.Add(this.numLogOutWhenIdle);
             this.Controls.Add(this.chkLogOutWhenIdle);
             this.Controls.Add(this.btnLogPathBrowse);
-            this.Controls.Add(this.txtLogPath);
+            this.Controls.Add(this.txtCiscoExeFile);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
@@ -207,7 +207,7 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtLogPath;
+        private System.Windows.Forms.TextBox txtCiscoExeFile;
         private System.Windows.Forms.Button btnLogPathBrowse;
         private System.Windows.Forms.CheckBox chkLogOutWhenIdle;
         private System.Windows.Forms.NumericUpDown numLogOutWhenIdle;
@@ -216,6 +216,6 @@
         private System.Windows.Forms.Label lblCiscoPassword;
         private System.Windows.Forms.TextBox txtCiscoPassword;
         private System.Windows.Forms.Label lblCiscoPasswordNote;
-        private System.Windows.Forms.OpenFileDialog ofdLogFilePath;
+        private System.Windows.Forms.OpenFileDialog ofdCiscoExePath;
     }
 }

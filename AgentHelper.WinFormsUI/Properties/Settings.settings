@@ -5,9 +5,6 @@
     <Setting Name="ShowMinimizeNotification" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="AgentLogFilePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Program Files (x86)\Cisco\Desktop\log\Agent0001.log</Value>
-    </Setting>
     <Setting Name="IdleMinsBeforeLoggingOut" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
@@ -16,6 +13,9 @@
     </Setting>
     <Setting Name="LogInAfterIdle" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="CiscoAgentProcessName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">agent</Value>
     </Setting>
   </Settings>
 </SettingsFile>

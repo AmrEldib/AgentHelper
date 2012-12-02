@@ -2,9 +2,11 @@
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 using System.Windows.Forms;
 using AgentHelper.WinFormsUI.Properties;
+using System.Linq;
 
 namespace AgentHelper.WinFormsUI
 {
@@ -19,25 +21,37 @@ namespace AgentHelper.WinFormsUI
 
         public bool LoggedOutBecauseIdle { get; set; }
 
-        private bool _IsLoggedIn;
+        private AgentStatus _Status;
 
-        public bool IsLoggedIn
+        public AgentStatus Status
         {
-            get { return _IsLoggedIn; }
+            get { return _Status; }
             set
             {
-                _IsLoggedIn = value;
-                if (value)
+                _Status = value;
+
+                switch (value)
                 {
-                    this.lblCurrentStatus.Text = "Agent is Logged In";
-                    this.TrayIcon.Icon = Resources.GreenPhone;
-                    this.Icon = Resources.GreenPhone;
-                }
-                else
-                {
-                    this.lblCurrentStatus.Text = "Agent is Logged Out";
-                    this.TrayIcon.Icon = Resources.RedPhone;
-                    this.Icon = Resources.RedPhone;
+                    case AgentStatus.Ready:
+                        this.lblCurrentStatus.Text = "Agent is Ready";
+                        this.TrayIcon.Icon = Resources.GreenPhone;
+                        this.Icon = Resources.GreenPhone;
+                        break;
+                    case AgentStatus.NotReady:
+                        this.lblCurrentStatus.Text = "Agent is Not Ready";
+                        this.TrayIcon.Icon = Resources.OrangePhone;
+                        this.Icon = Resources.OrangePhone;
+                        break;
+                    case AgentStatus.LoggedOut:
+                        this.lblCurrentStatus.Text = "Agent is Logged Out";
+                        this.TrayIcon.Icon = Resources.RedPhone;
+                        this.Icon = Resources.RedPhone;
+                        break;
+                    case AgentStatus.Closed:
+                        // TODO: add gray icon for closed agent.
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -45,9 +59,6 @@ namespace AgentHelper.WinFormsUI
         public AgentMonitor()
         {
             InitializeComponent();
-
-            // Check that log file exists
-            this.CheckLogFilePath();
 
             // Settings button
             this.btnSettings.Click += btnSettings_Click;
@@ -83,13 +94,30 @@ namespace AgentHelper.WinFormsUI
             this.StatusTimer.Start();
         }
 
+        private string GetMainWindowTitle(string processName)
+        {
+            Process[] processes = Process.GetProcesses();
+
+            foreach (Process process in processes)
+            {
+                if (process.ProcessName.ToLower() == processName.ToLower())
+                {
+                    return process.MainWindowTitle;
+                }
+            }
+
+            // If no process is found with this name, throw an exception
+            throw new ArgumentException("No process can be found with this name", "processName");
+        }
+
         private void SetupIdleMonitoring()
         {
             // Set up monitoring of idle time
             this.IdleTimer = new Timer();
             if (Settings.Default.IdleMinsBeforeLoggingOut != 0)
             {
-                this.IdleTimer.Interval = (Settings.Default.IdleMinsBeforeLoggingOut * 60 * 1000) / 2; // IdleMintues * 60 seconds/min * 1000 millisec/sec
+                // IdleMintues * 60 seconds/min * 1000 millisecond/sec
+                this.IdleTimer.Interval = (Settings.Default.IdleMinsBeforeLoggingOut * 60 * 1000) / 2;
             }
             else
             {
@@ -119,18 +147,23 @@ namespace AgentHelper.WinFormsUI
             settingsForm.Show(this);
         }
 
+        private bool IsLoggedIn()
+        {
+            return (this.Status == AgentStatus.NotReady | this.Status == AgentStatus.Ready);
+        }
+
         private void IdleTimer_Tick(object sender, EventArgs e)
         {
             if (Settings.Default.IdleMinsBeforeLoggingOut != 0)
             {
-                if (GetLastInputTime() > Settings.Default.IdleMinsBeforeLoggingOut & this.IsLoggedIn)
+                if (GetLastInputTime() > Settings.Default.IdleMinsBeforeLoggingOut & this.IsLoggedIn())
                 {
                     this.LogOut();
                     this.LoggedOutBecauseIdle = true;
                 }
                 else
                 {
-                    if (this.LoggedOutBecauseIdle & !this.IsLoggedIn & Settings.Default.LogInAfterIdle)
+                    if (this.LoggedOutBecauseIdle & !this.IsLoggedIn() & Settings.Default.LogInAfterIdle)
                     {
                         this.LogIn();
                         this.LoggedOutBecauseIdle = false;
@@ -144,7 +177,23 @@ namespace AgentHelper.WinFormsUI
             Process.Start("LogInAgent.ahk");
 
             // Change status
-            this.IsLoggedIn = true;
+            this.Status = AgentStatus.NotReady;
+        }
+
+        private void SwitchToNotReady()
+        {
+            Process.Start("SwitchToNotReady.ahk");
+
+            // Change status
+            this.Status = AgentStatus.NotReady;
+        }
+
+        private void SwitchToReady()
+        {
+            Process.Start("SwitchToReady.ahk");
+
+            // Change status
+            this.Status = AgentStatus.Ready;
         }
 
         private void LogOut()
@@ -152,67 +201,21 @@ namespace AgentHelper.WinFormsUI
             Process.Start("LogOutAgent.ahk");
 
             // Change status
-            this.IsLoggedIn = false;
+            this.Status = AgentStatus.LoggedOut;
+        }
+
+        private void CloseAgent()
+        {
+            Process.Start("CloseAgent.ahk");
+
+            // Change status
+            this.Status = AgentStatus.Closed;
         }
 
         private void AgentMonitor_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.TrayIcon.Visible = false;
             this.TrayIcon.Dispose();
-        }
-
-        private void CheckLogFilePath()
-        {
-            if (!File.Exists(Settings.Default.AgentLogFilePath))
-            {
-                // Check if "Program Files (x86)" exists. If not, it's a x86 OS
-                if (!Directory.Exists(@"C:\Program Files (x86)\"))
-                {
-                    // If x86 log file is found, switch to it.
-                    if (File.Exists(Resources.AgentLogFilePath86))
-                    {
-                        Settings.Default.AgentLogFilePath = Resources.AgentLogFilePath86;
-                        Settings.Default.Save();
-                    }
-                    else
-                    {
-                        this.ChooseLogFilePath();
-                    }
-                }
-                else
-                {
-                    this.ChooseLogFilePath();
-                }
-            }
-        }
-
-        private void ChooseLogFilePath()
-        {
-            MessageBox.Show("Can't find Cisco's log file. Please choose the path to the file.", "Log File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            bool fileReplaced = false;
-            while (!fileReplaced)
-            {
-                OpenFileDialog ofd = new OpenFileDialog();
-                ofd.Filter = "Log File|*.log";
-                ofd.SupportMultiDottedExtensions = true;
-                ofd.Title = "Select Cisco Log File";
-                DialogResult result = ofd.ShowDialog();
-                if (result == System.Windows.Forms.DialogResult.OK)
-                {
-                    Settings.Default.AgentLogFilePath = ofd.FileName;
-                    Settings.Default.Save();
-                    fileReplaced = true;
-                }
-                else
-                {
-                    DialogResult errorResult = MessageBox.Show("Can't run Agent Helper without the location of the Cisco log file. Exit now?", "File Path Required", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (errorResult == System.Windows.Forms.DialogResult.Yes)
-                    {
-                        fileReplaced = true;
-                        Environment.Exit(0);
-                    }
-                }
-            }
         }
 
         private void TrayIcon_BalloonTipClicked(object sender, EventArgs e)
@@ -259,55 +262,35 @@ namespace AgentHelper.WinFormsUI
             this.DetectAgentStatus();
         }
 
-        private string GetContentOfAgentLog(string filepath)
+        private AgentStatus DetectAgentStatus()
         {
-            string content;
-            FileStream fileStream = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             try
             {
-                // get file length
-                int length = (int)fileStream.Length;
-                // create buffer
-                var buffer = new byte[length];
-                // actual number of bytes read
-                int count;
-                // total number of bytes read          
-                int sum = 0;
+                // Get title of Cisco Agent window
+                string titleOfAgentWindow = this.GetMainWindowTitle(Settings.Default.CiscoAgentProcessName);
 
-                // read until Read method returns 0 
-                // (end of the stream has been reached)
-                while ((count = fileStream.Read(buffer, sum, length - sum)) > 0)
+                if (titleOfAgentWindow == Resources.CiscoWindowTitleLoggedOut)
                 {
-                    sum += count;  // sum is a buffer offset for next reading
+                    this.Status = AgentStatus.LoggedOut;
                 }
-
-                content = Encoding.UTF8.GetString(buffer);
+                else if (titleOfAgentWindow == Resources.CiscoWindowTitleNotReady)
+                {
+                    this.Status = AgentStatus.NotReady;
+                }
+                else if (titleOfAgentWindow == Resources.CiscoWindowTitleReady)
+                {
+                    this.Status = AgentStatus.Ready;
+                }
             }
-            finally
+            catch (ArgumentException)
             {
-                fileStream.Close();
+                this.Status = AgentStatus.Closed;
             }
 
-            return content;
+            return this.Status;
         }
 
-        private void DetectAgentStatus()
-        {
-            // Read log file
-            string logContent = this.GetContentOfAgentLog(Settings.Default.AgentLogFilePath);
-
-            // Detect status based on log content
-            this.IsLoggedIn = this.IsAgentLoggedIn(logContent);
-        }
-
-        private bool IsAgentLoggedIn(string logContent)
-        {
-            int loggedInIndex = logContent.LastIndexOf(Resources.LoggedInMessage);
-            int loggedOutIndex = logContent.LastIndexOf(Resources.LoggedOutMessage);
-
-            return (loggedInIndex > loggedOutIndex);
-        }
-
+        #region Interop Methods for Detecting Idle Time
         [DllImport("user32.dll")]
         static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
 
@@ -340,5 +323,6 @@ namespace AgentHelper.WinFormsUI
             [MarshalAs(UnmanagedType.U4)]
             public UInt32 dwTime;
         }
+        #endregion
     }
 }
