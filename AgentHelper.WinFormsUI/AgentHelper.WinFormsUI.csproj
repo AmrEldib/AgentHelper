@@ -37,22 +37,42 @@
     </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.1.0\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
+    <Reference Include="TestStack.White">
+      <HintPath>..\packages\TestStack.White.9.2.0.11\lib\net40\TestStack.White.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgentMonitor.AgentStatus.cs">
+      <SubType>Form</SubType>
+      <DependentUpon>AgentMonitor.cs</DependentUpon>
+    </Compile>
     <Compile Include="AgentMonitor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AgentMonitor.Designer.cs">
+      <DependentUpon>AgentMonitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AgentMonitor.IdleTime.cs">
+      <SubType>Form</SubType>
+      <DependentUpon>AgentMonitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AgentMonitor.ScreenLock.cs">
+      <SubType>Form</SubType>
+      <DependentUpon>AgentMonitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AgentMonitor.TrayIcon.cs">
+      <SubType>Form</SubType>
       <DependentUpon>AgentMonitor.cs</DependentUpon>
     </Compile>
     <Compile Include="Enums.cs" />
@@ -90,6 +110,7 @@
     <None Include="LogOutAgent.ahk">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -108,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FeaturesIdeas.txt" />
+    <None Include="Resources\GrayPhone.ico" />
     <None Include="Resources\RedPhone.ico" />
     <None Include="Resources\OrangePhone.ico" />
     <None Include="Resources\GreenPhone.ico" />

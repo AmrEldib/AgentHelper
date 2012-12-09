@@ -61,20 +61,20 @@ namespace AgentHelper.WinFormsUI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to C:\Program Files (x86)\Cisco\Desktop\log\Agent0001.log.
+        ///   Looks up a localized string similar to C:\Program Files (x86)\Cisco\Desktop\bin\agent.exe.
         /// </summary>
-        internal static string AgentLogFilePath64 {
+        internal static string AgentExeLocation64 {
             get {
-                return ResourceManager.GetString("AgentLogFilePath64", resourceCulture);
+                return ResourceManager.GetString("AgentExeLocation64", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to C:\Program Files\Cisco\Desktop\log\Agent0001.log.
+        ///   Looks up a localized string similar to C:\Program Files\Cisco\Desktop\bin\agent.exe.
         /// </summary>
-        internal static string AgentLogFilePath86 {
+        internal static string AgentExeLocation86 {
             get {
-                return ResourceManager.GetString("AgentLogFilePath86", resourceCulture);
+                return ResourceManager.GetString("AgentExeLocation86", resourceCulture);
             }
         }
         
@@ -135,6 +135,16 @@ namespace AgentHelper.WinFormsUI.Properties {
         internal static string CiscoWindowTitleReady {
             get {
                 return ResourceManager.GetString("CiscoWindowTitleReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon GrayPhone {
+            get {
+                object obj = ResourceManager.GetObject("GrayPhone", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

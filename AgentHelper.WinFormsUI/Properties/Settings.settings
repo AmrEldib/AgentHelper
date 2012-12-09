@@ -6,7 +6,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="IdleMinsBeforeLoggingOut" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="CiscoPassword" Type="System.String" Scope="User">
       <Value Profile="(Default)">123456</Value>
@@ -14,8 +14,35 @@
     <Setting Name="LogInAfterIdle" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="CiscoAgentProcessName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">agent</Value>
+    <Setting Name="CiscoAgentExeFileLocation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Program Files (x86)\Cisco\Desktop\bin\agent.exe</Value>
+    </Setting>
+    <Setting Name="LogInAfterIdleToStatus" Type="AgentHelper.WinFormsUI.AgentStatus" Scope="User">
+      <Value Profile="(Default)">NotReady</Value>
+    </Setting>
+    <Setting Name="ChangeStatusOnScreenLock" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ChangeStatusOnScreenLockTo" Type="AgentHelper.WinFormsUI.AgentStatus" Scope="User">
+      <Value Profile="(Default)">NotReady</Value>
+    </Setting>
+    <Setting Name="ChangeStatusOnScreenUnlock" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ChangeStatusOnScreenUnlockTo" Type="AgentHelper.WinFormsUI.AgentStatus" Scope="User">
+      <Value Profile="(Default)">NotReady</Value>
+    </Setting>
+    <Setting Name="LogInOnStartup" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="LogInOnStartupTo" Type="AgentHelper.WinFormsUI.AgentStatus" Scope="User">
+      <Value Profile="(Default)">NotReady</Value>
+    </Setting>
+    <Setting Name="LogOutAndCloseAgentOnShutDown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="LogOutOnIdle" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

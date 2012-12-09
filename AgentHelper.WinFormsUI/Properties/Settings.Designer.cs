@@ -37,7 +37,7 @@ namespace AgentHelper.WinFormsUI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int IdleMinsBeforeLoggingOut {
             get {
                 return ((int)(this["IdleMinsBeforeLoggingOut"]));
@@ -73,13 +73,121 @@ namespace AgentHelper.WinFormsUI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("agent")]
-        public string CiscoAgentProcessName {
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Program Files (x86)\\Cisco\\Desktop\\bin\\agent.exe")]
+        public string CiscoAgentExeFileLocation {
             get {
-                return ((string)(this["CiscoAgentProcessName"]));
+                return ((string)(this["CiscoAgentExeFileLocation"]));
             }
             set {
-                this["CiscoAgentProcessName"] = value;
+                this["CiscoAgentExeFileLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NotReady")]
+        public global::AgentHelper.WinFormsUI.AgentStatus LogInAfterIdleToStatus {
+            get {
+                return ((global::AgentHelper.WinFormsUI.AgentStatus)(this["LogInAfterIdleToStatus"]));
+            }
+            set {
+                this["LogInAfterIdleToStatus"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ChangeStatusOnScreenLock {
+            get {
+                return ((bool)(this["ChangeStatusOnScreenLock"]));
+            }
+            set {
+                this["ChangeStatusOnScreenLock"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NotReady")]
+        public global::AgentHelper.WinFormsUI.AgentStatus ChangeStatusOnScreenLockTo {
+            get {
+                return ((global::AgentHelper.WinFormsUI.AgentStatus)(this["ChangeStatusOnScreenLockTo"]));
+            }
+            set {
+                this["ChangeStatusOnScreenLockTo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ChangeStatusOnScreenUnlock {
+            get {
+                return ((bool)(this["ChangeStatusOnScreenUnlock"]));
+            }
+            set {
+                this["ChangeStatusOnScreenUnlock"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NotReady")]
+        public global::AgentHelper.WinFormsUI.AgentStatus ChangeStatusOnScreenUnlockTo {
+            get {
+                return ((global::AgentHelper.WinFormsUI.AgentStatus)(this["ChangeStatusOnScreenUnlockTo"]));
+            }
+            set {
+                this["ChangeStatusOnScreenUnlockTo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LogInOnStartup {
+            get {
+                return ((bool)(this["LogInOnStartup"]));
+            }
+            set {
+                this["LogInOnStartup"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NotReady")]
+        public global::AgentHelper.WinFormsUI.AgentStatus LogInOnStartupTo {
+            get {
+                return ((global::AgentHelper.WinFormsUI.AgentStatus)(this["LogInOnStartupTo"]));
+            }
+            set {
+                this["LogInOnStartupTo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LogOutAndCloseAgentOnShutDown {
+            get {
+                return ((bool)(this["LogOutAndCloseAgentOnShutDown"]));
+            }
+            set {
+                this["LogOutAndCloseAgentOnShutDown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LogOutOnIdle {
+            get {
+                return ((bool)(this["LogOutOnIdle"]));
+            }
+            set {
+                this["LogOutOnIdle"] = value;
             }
         }
     }

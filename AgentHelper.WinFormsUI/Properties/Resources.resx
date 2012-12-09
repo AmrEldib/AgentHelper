@@ -117,11 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AgentLogFilePath64" xml:space="preserve">
-    <value>C:\Program Files (x86)\Cisco\Desktop\log\Agent0001.log</value>
+  <data name="AgentExeLocation64" xml:space="preserve">
+    <value>C:\Program Files (x86)\Cisco\Desktop\bin\agent.exe</value>
   </data>
-  <data name="AgentLogFilePath86" xml:space="preserve">
-    <value>C:\Program Files\Cisco\Desktop\log\Agent0001.log</value>
+  <data name="AgentExeLocation86" xml:space="preserve">
+    <value>C:\Program Files\Cisco\Desktop\bin\agent.exe</value>
   </data>
   <data name="AhkLoginScript" xml:space="preserve">
     <value>IfWinExist Logout - Cisco Agent Desktop
@@ -156,5 +156,8 @@
   </data>
   <data name="CiscoWindowTitleReady" xml:space="preserve">
     <value>Ready - Cisco Agent Desktop</value>
+  </data>
+  <data name="GrayPhone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GrayPhone.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
