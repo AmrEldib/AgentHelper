@@ -43,9 +43,6 @@
             this.lblCiscoPasswordNote = new System.Windows.Forms.Label();
             this.ofdCiscoExeLocation = new System.Windows.Forms.OpenFileDialog();
             this.label2 = new System.Windows.Forms.Label();
-            this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
-            this.lineShape2 = new Microsoft.VisualBasic.PowerPacks.LineShape();
-            this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.label3 = new System.Windows.Forms.Label();
             this.chkStartup = new System.Windows.Forms.CheckBox();
             this.rdbStartupReady = new System.Windows.Forms.RadioButton();
@@ -158,6 +155,7 @@
             // chkLogInAfterIdle
             // 
             this.chkLogInAfterIdle.AutoSize = true;
+            this.chkLogInAfterIdle.Enabled = false;
             this.chkLogInAfterIdle.Location = new System.Drawing.Point(29, 139);
             this.chkLogInAfterIdle.Name = "chkLogInAfterIdle";
             this.chkLogInAfterIdle.Size = new System.Drawing.Size(201, 17);
@@ -201,50 +199,20 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Bold);
             this.label2.Location = new System.Drawing.Point(22, 80);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 13);
+            this.label2.Size = new System.Drawing.Size(60, 13);
             this.label2.TabIndex = 12;
             this.label2.Text = "Idle Time";
-            // 
-            // shapeContainer1
-            // 
-            this.shapeContainer1.Location = new System.Drawing.Point(0, 0);
-            this.shapeContainer1.Margin = new System.Windows.Forms.Padding(0);
-            this.shapeContainer1.Name = "shapeContainer1";
-            this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
-            this.lineShape2,
-            this.lineShape1});
-            this.shapeContainer1.Size = new System.Drawing.Size(510, 495);
-            this.shapeContainer1.TabIndex = 13;
-            this.shapeContainer1.TabStop = false;
-            // 
-            // lineShape2
-            // 
-            this.lineShape2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lineShape2.Name = "lineShape2";
-            this.lineShape2.X1 = 63;
-            this.lineShape2.X2 = 489;
-            this.lineShape2.Y1 = 252;
-            this.lineShape2.Y2 = 252;
-            // 
-            // lineShape1
-            // 
-            this.lineShape1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lineShape1.Name = "lineShape1";
-            this.lineShape1.X1 = 63;
-            this.lineShape1.X2 = 489;
-            this.lineShape1.Y1 = 88;
-            this.lineShape1.Y2 = 88;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Bold);
             this.label3.Location = new System.Drawing.Point(22, 244);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(104, 13);
+            this.label3.Size = new System.Drawing.Size(121, 13);
             this.label3.TabIndex = 14;
             this.label3.Text = "Startup && Shutdown";
             // 
@@ -253,9 +221,9 @@
             this.chkStartup.AutoSize = true;
             this.chkStartup.Location = new System.Drawing.Point(29, 278);
             this.chkStartup.Name = "chkStartup";
-            this.chkStartup.Size = new System.Drawing.Size(175, 17);
+            this.chkStartup.Size = new System.Drawing.Size(209, 17);
             this.chkStartup.TabIndex = 15;
-            this.chkStartup.Text = "Log in on Startup and switch to";
+            this.chkStartup.Text = "Log in on Helper Startup and switch to";
             this.chkStartup.UseVisualStyleBackColor = true;
             // 
             // rdbStartupReady
@@ -285,14 +253,15 @@
             this.chkShutdown.AutoSize = true;
             this.chkShutdown.Location = new System.Drawing.Point(29, 312);
             this.chkShutdown.Name = "chkShutdown";
-            this.chkShutdown.Size = new System.Drawing.Size(210, 17);
+            this.chkShutdown.Size = new System.Drawing.Size(228, 17);
             this.chkShutdown.TabIndex = 15;
-            this.chkShutdown.Text = "Log out and Close Agent on Shutdown";
+            this.chkShutdown.Text = "Log out and Close Agent on Exiting Helper";
             this.chkShutdown.UseVisualStyleBackColor = true;
             // 
             // chkScreenLock
             // 
             this.chkScreenLock.AutoSize = true;
+            this.chkScreenLock.Enabled = false;
             this.chkScreenLock.Location = new System.Drawing.Point(29, 171);
             this.chkScreenLock.Name = "chkScreenLock";
             this.chkScreenLock.Size = new System.Drawing.Size(146, 17);
@@ -303,6 +272,7 @@
             // rdbIdleReady
             // 
             this.rdbIdleReady.AutoSize = true;
+            this.rdbIdleReady.Enabled = false;
             this.rdbIdleReady.Location = new System.Drawing.Point(29, 6);
             this.rdbIdleReady.Name = "rdbIdleReady";
             this.rdbIdleReady.Size = new System.Drawing.Size(56, 17);
@@ -314,6 +284,7 @@
             // 
             this.rdbIdleNotReady.AutoSize = true;
             this.rdbIdleNotReady.Checked = true;
+            this.rdbIdleNotReady.Enabled = false;
             this.rdbIdleNotReady.Location = new System.Drawing.Point(137, 5);
             this.rdbIdleNotReady.Name = "rdbIdleNotReady";
             this.rdbIdleNotReady.Size = new System.Drawing.Size(76, 17);
@@ -326,6 +297,7 @@
             // 
             this.rdbScreenLockNotReady.AutoSize = true;
             this.rdbScreenLockNotReady.Checked = true;
+            this.rdbScreenLockNotReady.Enabled = false;
             this.rdbScreenLockNotReady.Location = new System.Drawing.Point(137, 2);
             this.rdbScreenLockNotReady.Name = "rdbScreenLockNotReady";
             this.rdbScreenLockNotReady.Size = new System.Drawing.Size(76, 17);
@@ -337,6 +309,7 @@
             // rdbScreenLockLogOut
             // 
             this.rdbScreenLockLogOut.AutoSize = true;
+            this.rdbScreenLockLogOut.Enabled = false;
             this.rdbScreenLockLogOut.Location = new System.Drawing.Point(29, 2);
             this.rdbScreenLockLogOut.Name = "rdbScreenLockLogOut";
             this.rdbScreenLockLogOut.Size = new System.Drawing.Size(63, 17);
@@ -348,6 +321,7 @@
             // 
             this.rdbScreenUnlockNotReady.AutoSize = true;
             this.rdbScreenUnlockNotReady.Checked = true;
+            this.rdbScreenUnlockNotReady.Enabled = false;
             this.rdbScreenUnlockNotReady.Location = new System.Drawing.Point(129, -1);
             this.rdbScreenUnlockNotReady.Name = "rdbScreenUnlockNotReady";
             this.rdbScreenUnlockNotReady.Size = new System.Drawing.Size(76, 17);
@@ -359,6 +333,7 @@
             // rdbScreenUnlockReady
             // 
             this.rdbScreenUnlockReady.AutoSize = true;
+            this.rdbScreenUnlockReady.Enabled = false;
             this.rdbScreenUnlockReady.Location = new System.Drawing.Point(21, -1);
             this.rdbScreenUnlockReady.Name = "rdbScreenUnlockReady";
             this.rdbScreenUnlockReady.Size = new System.Drawing.Size(56, 17);
@@ -369,6 +344,7 @@
             // chkScreenUnlock
             // 
             this.chkScreenUnlock.AutoSize = true;
+            this.chkScreenUnlock.Enabled = false;
             this.chkScreenUnlock.Location = new System.Drawing.Point(29, 205);
             this.chkScreenUnlock.Name = "chkScreenUnlock";
             this.chkScreenUnlock.Size = new System.Drawing.Size(236, 17);
@@ -439,7 +415,6 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.shapeContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -476,9 +451,6 @@
         private System.Windows.Forms.Label lblCiscoPasswordNote;
         private System.Windows.Forms.OpenFileDialog ofdCiscoExeLocation;
         private System.Windows.Forms.Label label2;
-        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
-        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape2;
-        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox chkStartup;
         private System.Windows.Forms.RadioButton rdbStartupReady;

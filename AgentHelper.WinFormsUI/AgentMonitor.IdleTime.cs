@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using AgentHelper.WinFormsUI.Properties;
@@ -24,15 +25,8 @@ namespace AgentHelper.WinFormsUI
         {
             // Set up monitoring of idle time
             this.IdleTimer = new Timer();
-            if (Settings.Default.IdleMinsBeforeLoggingOut != 0)
-            {
-                // IdleMintues * 60 seconds/min * 1000 millisecond/sec
-                this.IdleTimer.Interval = (Settings.Default.IdleMinsBeforeLoggingOut * 60 * 1000) / 2;
-            }
-            else
-            {
-                this.IdleTimer.Interval = 10000000;
-            }
+            this.IdleTimer.Interval = 3000;
+            SetupIdleMonitoringTimer();
             this.IdleTimer.Tick += IdleTimer_Tick;
 
             // Start monitoring idle time
@@ -44,6 +38,14 @@ namespace AgentHelper.WinFormsUI
         }
 
         /// <summary>
+        /// Sets up the timer interval for monitoring Idle status.
+        /// </summary>
+        private void SetupIdleMonitoringTimer()
+        {
+            this.IdleTimer.Enabled = (Settings.Default.IdleMinsBeforeLoggingOut != 0);
+        }
+
+        /// <summary>
         /// Handler for the IdleTimer's Tick event.
         /// </summary>
         /// <param name="sender">Object raising event.</param>
@@ -52,15 +54,34 @@ namespace AgentHelper.WinFormsUI
         {
             if (Settings.Default.IdleMinsBeforeLoggingOut != 0)
             {
-                if (GetLastInputTime() > Settings.Default.IdleMinsBeforeLoggingOut & this.IsLoggedIn())
+                bool inactive = User32Interop.GetLastInput() > TimeSpan.FromMinutes(Settings.Default.IdleMinsBeforeLoggingOut);
+
+                if (inactive &
+                    Settings.Default.LogOutOnIdle &
+                    this.IsLoggedIn)
                 {
+                    this.Records.Add(new AgentStatusChangeEventArgs(
+                        AgentStatus.Undetermined,
+                        AgentStatus.Undetermined,
+                        DateTime.Now,
+                        "Logging out because of user going into idle status."));
+
                     this.LogOut();
                     this.LoggedOutBecauseIdle = true;
+                    return;
                 }
                 else
                 {
-                    if (this.LoggedOutBecauseIdle & !this.IsLoggedIn() & Settings.Default.LogInAfterIdle)
+                    if (!this.IsLoggedIn &
+                        Settings.Default.LogInAfterIdle &
+                        this.LoggedOutBecauseIdle)
                     {
+                        this.Records.Add(new AgentStatusChangeEventArgs(
+                            AgentStatus.Undetermined,
+                            AgentStatus.Undetermined,
+                            DateTime.Now,
+                            "Logging back in because of user coming back from idle status."));
+
                         this.LogIn();
                         this.LoggedOutBecauseIdle = false;
                     }
@@ -115,6 +136,27 @@ namespace AgentHelper.WinFormsUI
         }
         #endregion
 
+        public static class User32Interop
+        {
+            public static TimeSpan GetLastInput()
+            {
+                var plii = new LASTINPUTINFO();
+                plii.cbSize = (uint)Marshal.SizeOf(plii);
 
+                if (GetLastInputInfo(ref plii))
+                    return TimeSpan.FromMilliseconds(Environment.TickCount - plii.dwTime);
+                else
+                    throw new Win32Exception(Marshal.GetLastWin32Error());
+            }
+
+            [DllImport("user32.dll", SetLastError = true)]
+            static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+
+            struct LASTINPUTINFO
+            {
+                public uint cbSize;
+                public uint dwTime;
+            }
+        }
     }
 }

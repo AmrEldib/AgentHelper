@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AgentHelper")]
-[assembly: AssemblyDescription("A utility that helps show status of Cisco Agent in the System Tray")]
+[assembly: AssemblyTitle("AgentHelper.DummyCiscoAgent")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("AgentHelper")]
-[assembly: AssemblyProduct("AgentHelper")]
-[assembly: AssemblyCopyright("Copyright © Amr Eldib 2012")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("AgentHelper.DummyCiscoAgent")]
+[assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("bdc37b72-f278-438f-be91-71b05cedc5c9")]
+[assembly: Guid("440957a8-b2eb-4b42-8629-15debb76b3bf")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.3.1.0")]
-[assembly: AssemblyFileVersion("0.3.1.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace AgentHelper.WinFormsUI
@@ -13,10 +11,18 @@ namespace AgentHelper.WinFormsUI
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            try
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new AgentMonitor());
+                Application.Run(new AgentMonitor());
+            }
+            catch (Exception e)
+            {
+                ErrorForm errorForm = new ErrorForm(e);
+                errorForm.Show();
+            }
         }
 
     }

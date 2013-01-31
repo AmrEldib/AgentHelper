@@ -261,6 +261,7 @@ namespace AgentHelper.WinFormsUI
             {
                 this.rdbStartupNotReady.Checked = true;
             }
+            this.chkShutdown.Checked = Settings.Default.LogOutAndCloseAgentOnShutDown;
 
             // CiscoPassword
             this.txtCiscoPassword.Text = Settings.Default.CiscoPassword;
@@ -271,8 +272,8 @@ namespace AgentHelper.WinFormsUI
         /// </summary>
         private void SaveSettings()
         {
-            // CiscoAgentProcessName
-            if (!string.IsNullOrWhiteSpace(this.txtCiscoExeLocation.Text))
+            // CiscoAgentExeFileLocation
+            if (!File.Exists(this.txtCiscoExeLocation.Text))
             {
                 throw new ArgumentException("Cisco Application Name is missing.", "CiscoAgentProcessName");
             }
@@ -329,6 +330,7 @@ namespace AgentHelper.WinFormsUI
             {
                 Settings.Default.LogInOnStartupTo = AgentStatus.NotReady;
             }
+            Settings.Default.LogOutAndCloseAgentOnShutDown = this.chkShutdown.Checked;
 
             // CiscoPassword
             if (string.IsNullOrWhiteSpace(this.txtCiscoPassword.Text))
@@ -338,19 +340,49 @@ namespace AgentHelper.WinFormsUI
             else
             {
                 Settings.Default.CiscoPassword = this.txtCiscoPassword.Text;
-                this.UpdateAhkScriptsWithPassword(this.txtCiscoPassword.Text);
+                SettingsForm.UpdateAhkScriptsWithPassword(this.txtCiscoPassword.Text);
             }
 
+            // Save settings to file.
+            Settings.Default.Save();
         }
 
-        private void UpdateAhkScriptsWithPassword(string password)
+        /// <summary>
+        /// Updates AutoHotKey scripts with password.
+        /// </summary>
+        /// <param name="password">Agent Password.</param>
+        public static void UpdateAhkScriptsWithPassword(string password)
         {
-            string loginScriptContent = Resources.AhkLoginScript.Replace("[PASSCODE]", password);
+            UpdateAhkScriptWithPassword(Resources.AhkScriptLoggedOutToLoggedIn,
+                password,
+                Resources.AhkFileNameLoggedOutToLoggedIn);
+
+            UpdateAhkScriptWithPassword(Resources.AhkScriptTypeInPasswordToLogIn,
+                password,
+                Resources.AhkFileNameTypeInPasswordToLogIn);
+
+            UpdateAhkScriptWithPassword(Resources.AhkScriptRunAgent,
+                password,
+                Resources.AhkFileNameRunAgent);
+        }
+
+        /// <summary>
+        /// Updates an AutoHotKey script with password.
+        /// </summary>
+        /// <param name="script">Script content.</param>
+        /// <param name="password">Agent Password.</param>
+        /// <param name="fileName">Name of the script file.</param>
+        private static void UpdateAhkScriptWithPassword(string script,
+                                                string password,
+                                                string fileName)
+        {
+            string scriptContent =
+                script.Replace("[PASSCODE]", password);
 
             // Write script to file
-            using (TextWriter tw = new StreamWriter(Resources.AhkScriptLogin))
+            using (TextWriter tw = new StreamWriter(fileName))
             {
-                tw.Write(loginScriptContent);
+                tw.Write(scriptContent);
             }
         }
     }

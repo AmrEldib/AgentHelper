@@ -79,35 +79,119 @@ namespace AgentHelper.WinFormsUI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IfWinExist Logout - Cisco Agent Desktop
+        ///   Looks up a localized string similar to AhkBringUpLoginDialog.ahk.
+        /// </summary>
+        internal static string AhkFileNameBringUpLoginDialog {
+            get {
+                return ResourceManager.GetString("AhkFileNameBringUpLoginDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AhkCloseAgent.ahk.
+        /// </summary>
+        internal static string AhkFileNameCloseAgent {
+            get {
+                return ResourceManager.GetString("AhkFileNameCloseAgent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AhkLoggedInToLoggedOut.ahk.
+        /// </summary>
+        internal static string AhkFileNameLoggedInToLoggedOut {
+            get {
+                return ResourceManager.GetString("AhkFileNameLoggedInToLoggedOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AhkLoggedOutToLoggedIn.ahk.
+        /// </summary>
+        internal static string AhkFileNameLoggedOutToLoggedIn {
+            get {
+                return ResourceManager.GetString("AhkFileNameLoggedOutToLoggedIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AhkNotReadyToReady.ahk.
+        /// </summary>
+        internal static string AhkFileNameNotReadyToReady {
+            get {
+                return ResourceManager.GetString("AhkFileNameNotReadyToReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AhkReadyToNotReady.ahk.
+        /// </summary>
+        internal static string AhkFileNameReadyToNotReady {
+            get {
+                return ResourceManager.GetString("AhkFileNameReadyToNotReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AhkRunAgent.ahk.
+        /// </summary>
+        internal static string AhkFileNameRunAgent {
+            get {
+                return ResourceManager.GetString("AhkFileNameRunAgent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AhkTypeInPasswordToLogIn.ahk.
+        /// </summary>
+        internal static string AhkFileNameTypeInPasswordToLogIn {
+            get {
+                return ResourceManager.GetString("AhkFileNameTypeInPasswordToLogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IfWinExist, Logout - Cisco Agent Desktop
         ///{
         ///    WinActivate
-        ///	Send ^l
-        ///	WinWaitActive Agent Login
-        ///	Send [PASSCODE]{Enter}
+        ///	Send, ^l
+        ///	WinWaitActive, Agent Login
+        ///	Send, [PASSCODE]{Enter}
         ///}.
         /// </summary>
-        internal static string AhkLoginScript {
+        internal static string AhkScriptLoggedOutToLoggedIn {
             get {
-                return ResourceManager.GetString("AhkLoginScript", resourceCulture);
+                return ResourceManager.GetString("AhkScriptLoggedOutToLoggedIn", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LogInAgent.ahk.
+        ///   Looks up a localized string similar to Run, agent.exe, C:\Program Files (x86)\Cisco\Desktop\bin\
+        ///WinWait, Agent Login
+        ///WinActivate
+        ///Send [PASSCODE]{Enter}.
         /// </summary>
-        internal static string AhkScriptLogin {
+        internal static string AhkScriptRunAgent {
             get {
-                return ResourceManager.GetString("AhkScriptLogin", resourceCulture);
+                return ResourceManager.GetString("AhkScriptRunAgent", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LogOutAgent.ahk.
+        ///   Looks up a localized string similar to IfWinExist, Agent Login
+        ///{
+        ///    WinActivate
+        ///	Send, [PASSCODE]{Enter}
+        ///}
+        ///else
+        ///{
+        ///	WinWaitActive, Agent Login
+        ///	Send, [PASSCODE]{Enter}
+        ///}.
         /// </summary>
-        internal static string AhkScriptLogOut {
+        internal static string AhkScriptTypeInPasswordToLogIn {
             get {
-                return ResourceManager.GetString("AhkScriptLogOut", resourceCulture);
+                return ResourceManager.GetString("AhkScriptTypeInPasswordToLogIn", resourceCulture);
             }
         }
         
@@ -117,6 +201,15 @@ namespace AgentHelper.WinFormsUI.Properties {
         internal static string CiscoWindowTitleLoggedOut {
             get {
                 return ResourceManager.GetString("CiscoWindowTitleLoggedOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log in.
+        /// </summary>
+        internal static string CiscoWindowTitleLoginDialog {
+            get {
+                return ResourceManager.GetString("CiscoWindowTitleLoginDialog", resourceCulture);
             }
         }
         
@@ -141,6 +234,26 @@ namespace AgentHelper.WinFormsUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
+        internal static System.Drawing.Icon ErrorIcon {
+            get {
+                object obj = ResourceManager.GetObject("ErrorIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ErrorImage {
+            get {
+                object obj = ResourceManager.GetObject("ErrorImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
         internal static System.Drawing.Icon GrayPhone {
             get {
                 object obj = ResourceManager.GetObject("GrayPhone", resourceCulture);
@@ -155,6 +268,16 @@ namespace AgentHelper.WinFormsUI.Properties {
             get {
                 object obj = ResourceManager.GetObject("GreenPhone", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GreenPhoneImage {
+            get {
+                object obj = ResourceManager.GetObject("GreenPhoneImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
