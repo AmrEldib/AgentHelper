@@ -126,10 +126,15 @@
   <data name="AhkScriptLoggedOutToLoggedIn" xml:space="preserve">
     <value>IfWinExist, Logout - Cisco Agent Desktop
 {
-    WinActivate
-	Send, ^l
-	WinWaitActive, Agent Login
-	Send, [PASSCODE]{Enter}
+	ControlSend, ,^l, Logout - Cisco Agent Desktop
+	WinWait, Agent Login, , 4
+	WinActivate, Agent Login
+	Send [PASSCODE]{Enter}
+	if ErrorLevel
+	{
+		MsgBox, Couldn't Log in
+		return
+	}
 }</value>
   </data>
   <data name="AhkFileNameLoggedOutToLoggedIn" xml:space="preserve">
