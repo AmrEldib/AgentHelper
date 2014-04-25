@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using AgentHelper.WinFormsUI.Properties;
+using System.Threading;
 
 namespace AgentHelper.WinFormsUI
 {
@@ -12,7 +13,7 @@ namespace AgentHelper.WinFormsUI
         /// <summary>
         /// Timer for monitoring agent's status.
         /// </summary>
-        private Timer StatusTimer { get; set; }
+        private System.Windows.Forms.Timer StatusTimer { get; set; }
 
         /// <summary>
         /// Agent's current status.
@@ -276,20 +277,32 @@ namespace AgentHelper.WinFormsUI
             }
             else if (this.Status == AgentStatus.LoggedOut)
             {
+                // Set up an event for when the status turns to Not Ready
+                // This event handler will switch from Not Ready to Ready
+                this.AgentNotReady += SwitchFromNotReadyToReadyAfterLoggingIn;
+
                 // Just log in (it will switch to 'Not Ready').
                 this.LogIn();
-
-                // Then switch to 'Ready' by calling this method again.
-                this.SwitchToReady();
             }
             else if (this.Status == AgentStatus.Closed)
             {
+                // Set up an event for when the status turns to Not Ready
+                // This event handler will switch from Not Ready to Ready
+                this.AgentNotReady += SwitchFromNotReadyToReadyAfterLoggingIn;
+
                 // If agent is closed, just log in (will launch agent, then log in to 'Not Ready' status)
                 this.LogIn();
-
-                // Then switch to 'Ready' by calling this method again.
-                this.SwitchToReady();
             }
+        }
+
+        private void SwitchFromNotReadyToReadyAfterLoggingIn(object sender, AgentStatusChangeEventArgs e)
+        {
+            // Wait for 2 seconds
+            Thread.Sleep(2000);
+            // Switch to Ready
+            this.SwitchToReady();
+            // Unhook handler
+            this.AgentNotReady -= SwitchFromNotReadyToReadyAfterLoggingIn;
         }
 
         /// <summary>
